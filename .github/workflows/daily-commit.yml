@@ -2,25 +2,26 @@ name: Daily Commit
 
 on:
   schedule:
-    - cron: '0 6 * * *'  # Todos los días a las 6 AM UTC (ajústalo si necesitas otro horario)
-  workflow_dispatch:      # Permite ejecución manual si quieres
+    - cron: '0 5 * * *'  # Todos los días a las 5:00 UTC
+  workflow_dispatch:
 
 jobs:
-  auto-commit:
+  commit:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-    - name: Make changes
-      run: |
-        echo "Commit diario: $(date)" >> daily.txt
+      - name: Crear contenido único
+        run: |
+          echo "Último commit: $(date -u)" > daily_update.txt
+          echo "Hash aleatorio: $RANDOM$RANDOM" >> daily_update.txt
 
-    - name: Commit and push changes
-      run: |
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git add .
-        git commit -m "Daily commit: $(date)" || echo "No hay cambios"
-        git push
+      - name: Commit y Push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add daily_update.txt
+          git commit -m "Commit diario: $(date -u)" || echo "Sin cambios para hacer commit"
+          git push
