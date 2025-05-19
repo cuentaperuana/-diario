@@ -20,8 +20,8 @@ jobs:
 
       - name: Commit y Push
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "cuentaperuana"
+          git config user.email "cuentaperuana@outlook.com"
           git add daily_update.txt
           git commit -m "Commit diario: $(date -u)" || echo "Sin cambios para hacer commit"
           git push
