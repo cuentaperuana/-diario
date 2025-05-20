@@ -25,3 +25,5 @@ jobs:
           git add daily_update.txt
           git commit -m "Commit diario: $(date -u)" || echo "Sin cambios para hacer commit"
           git push
+      - name: Push changes
+        run: git push https://cuentaperuana:${{ secrets.GH_TOKEN }}@github.com/cuentaperuana/-diario.git
